@@ -2,7 +2,7 @@
 Usage example:
 
 ```
->  python main.py [certificate_covid.pdf] [output.json]
+python main.py [certificate_covid.pdf] [output.json]
 ```
   
 Output example:
@@ -17,7 +17,7 @@ Output example:
     "document": "3215 №430543",
     "vaccine": {
         "date": "03.07.2021",
-        "preparation": "Гам-КОВИД-Вак Комбинированная векторная вакцина для профилактикикоронавирусной инфекции, вызываемой вирусом SARS-CoV-2"
+        "preparation": "Гам-КОВИД-Вак Комбинированная векторная вакцина для профилактики коронавирусной инфекции, вызываемой вирусом SARS-CoV-2"
     }
 }
 ```
