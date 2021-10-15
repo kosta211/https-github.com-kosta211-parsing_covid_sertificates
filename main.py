@@ -51,8 +51,6 @@ if __name__ == '__main__':
         line = line.lstrip(' \t')
         text_raws.append(line)
 
-    print(text_raws)
-
     if 'Сертификат о вакцинации COVID-19' not in text_raws:
         raise SystemExit('Неверный формат файла')
 
