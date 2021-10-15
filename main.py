@@ -62,7 +62,7 @@ if __name__ == '__main__':
                                       if item == 'Дата введения вакцины:') + 1]
 
     preparation_raw_index = max(index for index, item in enumerate(text_raws) if item == 'Препарат:')
-    preparation = text_raws[preparation_raw_index + 1] + text_raws[preparation_raw_index + 2]
+    preparation = text_raws[preparation_raw_index + 1] + ' ' + text_raws[preparation_raw_index + 2]
 
     return_dict = {
         'last_name': last_name,
