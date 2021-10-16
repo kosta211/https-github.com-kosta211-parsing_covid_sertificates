@@ -13,11 +13,19 @@ def convert_pdf_to_txt(path):
     resource_manager = PDFResourceManager()
     string_io = StringIO()
     layout_analysis_params = LAParams()
-    text_converter = TextConverter(resource_manager, string_io, laparams=layout_analysis_params)
+    text_converter = TextConverter(
+        resource_manager,
+        string_io,
+        laparams=layout_analysis_params
+    )
     file_stream = open(path, 'rb')
     interpreter = PDFPageInterpreter(resource_manager, text_converter)
 
-    for page in PDFPage.get_pages(file_stream, maxpages=1, check_extractable=True):
+    for page in PDFPage.get_pages(
+            file_stream,
+            maxpages=1,
+            check_extractable=True
+    ):
         interpreter.process_page(page)
 
     parsed_text = string_io.getvalue()
@@ -46,23 +54,33 @@ if __name__ == '__main__':
     non_empty_lines = [line for line in lines if line.strip() != ""]
     string_without_empty_lines = ""
 
-    text_raws = list()
+    text_rows = list()
     for line in non_empty_lines:
         line = line.lstrip(' \t')
-        text_raws.append(line)
+        text_rows.append(line)
 
-    if 'Сертификат о вакцинации COVID-19' not in text_raws:
+    if 'Сертификат о вакцинации COVID-19' not in text_rows:
         raise SystemExit('Неверный формат файла')
 
-    last_name, first_name, middle_name = (re.sub(' +', ' ', text_raws[5])).split(' ')
-    birthday = text_raws[text_raws.index('Дата рождения:') + 1]
-    sex = text_raws[text_raws.index('Пол:') + 1]
-    document = text_raws[text_raws.index('Документ удостоверяющий личность') + 1]
-    last_vaccine_date = text_raws[max(index for index, item in enumerate(text_raws)
-                                      if item == 'Дата введения вакцины:') + 1]
+    last_name, first_name, middle_name = (
+        re.sub(' +', ' ', text_rows[5])).split(' ')
 
-    preparation_raw_index = max(index for index, item in enumerate(text_raws) if item == 'Препарат:')
-    preparation = text_raws[preparation_raw_index + 1] + ' ' + text_raws[preparation_raw_index + 2]
+    birthday = text_rows[text_rows.index('Дата рождения:') + 1]
+    sex = text_rows[text_rows.index('Пол:') + 1]
+
+    document = text_rows[
+        text_rows.index('Документ удостоверяющий личность') + 1]
+
+    last_vaccine_date = text_rows[max(
+        index for index, item in enumerate(text_rows)
+        if item == 'Дата введения вакцины:') + 1]
+
+    preparation_row_index = max(
+        index for index, item in enumerate(text_rows)
+        if item == 'Препарат:')
+
+    preparation = text_rows[preparation_row_index + 1] \
+        + ' ' + text_rows[preparation_row_index + 2]
 
     return_dict = {
         'last_name': last_name,
